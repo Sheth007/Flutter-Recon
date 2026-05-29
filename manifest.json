@@ -1,0 +1,62 @@
+{
+  "manifest_version": 3,
+
+  "name": "Flutter Recon",
+  "short_name": "FlutterRecon",
+
+  "version": "1.2.0",
+
+  "description": "Advanced Flutter Web reconnaissance and package fingerprinting engine.",
+
+  "permissions": [
+    "activeTab",
+    "storage",
+    "scripting",
+    "notifications",
+    "tabs"
+  ],
+
+  "host_permissions": [
+    "<all_urls>"
+  ],
+
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content.js"],
+      "run_at": "document_start"
+    }
+  ],
+
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; connect-src 'self' https://pub.dev https://pub.dartlang.org; img-src 'self' data:; font-src 'self';"
+  },
+
+  "icons": {
+    "16":  "icons/icon16.png",
+    "48":  "icons/icon48.png",
+    "128": "icons/icon128.png"
+  },
+
+  "action": {
+    "default_title": "Flutter Recon",
+    "default_popup": "popup/popup.html",
+    "default_icon": {
+      "16":  "icons/icon16.png",
+      "48":  "icons/icon48.png",
+      "128": "icons/icon128.png"
+    }
+  },
+
+  "web_accessible_resources": [
+    {
+      "resources": ["inject.js", "detectors/*.js", "icons/*.png"],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

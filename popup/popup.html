@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8" />
+  <title>Flutter Recon</title>
+  <link rel="stylesheet" href="popup.css" />
+</head>
+<body>
+
+  <header class="header">
+    <div class="header-left">
+      <svg class="logo" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M14 28L28 14H42L24 32L14 28Z" fill="#54C5F8"/>
+        <path d="M14 28L24 38H38L28 28H14Z" fill="#01579B"/>
+        <path d="M24 38L28 28L38 38H24Z" fill="#29B6F6"/>
+      </svg>
+      <div>
+        <div class="header-title">Flutter Recon</div>
+        <div class="header-sub" id="header-url">Scanning...</div>
+      </div>
+    </div>
+    <div class="header-right">
+      <button class="theme-toggle" id="theme-toggle" title="Toggle theme">
+        <span class="theme-icon theme-icon--dark">🌙</span>
+        <span class="theme-icon theme-icon--light">☀️</span>
+      </button>
+      <div id="flutter-badge" class="badge badge--scanning">
+        <span class="badge-dot"></span>
+        <span class="badge-text">Scanning</span>
+      </div>
+    </div>
+  </header>
+
+  <div class="tabs">
+    <button class="tab tab--active" data-tab="results">Results</button>
+    <button class="tab" data-tab="debug">Debug</button>
+  </div>
+
+  <!-- RESULTS TAB -->
+  <main id="tab-results" class="tab-panel">
+    <div id="state-not-flutter" class="state-panel hidden">
+      <div class="empty-icon">&#128269;</div>
+      <div class="empty-title">Not a Flutter site</div>
+      <div class="empty-sub">No Flutter Web signals detected on this page.</div>
+    </div>
+    <div id="state-loading" class="state-panel hidden">
+      <div class="detected-banner">
+        <span>Flutter Web detected!</span>
+        <span class="live-count" id="live-count-loading"></span>
+      </div>
+      <div class="skeleton-list">
+        <div class="skeleton-card"><div class="sk sk-title"></div><div class="sk sk-bar"></div><div class="sk sk-tag"></div></div>
+        <div class="skeleton-card"><div class="sk sk-title" style="width:55%"></div><div class="sk sk-bar" style="width:65%"></div><div class="sk sk-tag" style="width:40%"></div></div>
+        <div class="skeleton-card"><div class="sk sk-title" style="width:70%"></div><div class="sk sk-bar" style="width:45%"></div><div class="sk sk-tag" style="width:55%"></div></div>
+        <div class="skeleton-card"><div class="sk sk-title" style="width:45%"></div><div class="sk sk-bar" style="width:80%"></div><div class="sk sk-tag" style="width:35%"></div></div>
+      </div>
+    </div>
+    <div id="state-results" class="state-panel hidden">
+      <div class="detected-banner" id="results-banner"></div>
+      <div class="section-label"><span>Packages</span><span id="pkg-count" class="count-badge">0</span></div>
+      <div id="packages-list"></div>
+      <div class="section-label" style="margin-top:16px"><span>Scanned Resources</span><span id="res-count" class="count-badge">0</span></div>
+      <div id="resources-list"></div>
+    </div>
+    <div id="state-initial" class="state-panel">
+      <div class="empty-icon">&#128038;</div>
+      <div class="empty-title">Flutter Recon</div>
+      <div class="empty-sub">Open a website to begin detection.</div>
+    </div>
+  </main>
+
+  <!-- DEBUG TAB -->
+  <main id="tab-debug" class="tab-panel hidden">
+
+    <div class="dbg-stats">
+      <div class="dbg-stat"><div class="dbg-stat-label">URLs scanned</div><div class="dbg-stat-val" id="d-urls">0</div></div>
+      <div class="dbg-stat"><div class="dbg-stat-label">Packages</div><div class="dbg-stat-val" id="d-pkgs">0</div></div>
+      <div class="dbg-stat"><div class="dbg-stat-label">Resources</div><div class="dbg-stat-val" id="d-res">0</div></div>
+      <div class="dbg-stat"><div class="dbg-stat-label">Complete</div><div class="dbg-stat-val" id="d-done">no</div></div>
+    </div>
+
+    <div class="dbg-section">
+      <div class="dbg-section-head">
+        <span>Inject log</span>
+        <div style="display:flex;gap:6px;align-items:center">
+          <select id="dbg-filter" class="dbg-select">
+            <option value="all">all</option>
+            <option value="FLUTTER">flutter</option>
+            <option value="SCAN">scan</option>
+            <option value="MAP">map</option>
+            <option value="ASSET">asset</option>
+            <option value="PKG">pkg</option>
+            <option value="NOSIG">nosig</option>
+            <option value="NOPKG">nopkg</option>
+            <option value="ERR">errors</option>
+            <option value="HOOK">hooks</option>
+            <option value="SKIP">skip</option>
+          </select>
+          <button class="dbg-clr" id="clear-log-btn">clear</button>
+        </div>
+      </div>
+      <div class="dbg-log" id="dbg-log">
+        <div class="dbg-empty">Waiting for inject.js events...</div>
+      </div>
+    </div>
+
+    <div class="dbg-section" style="margin-top:8px">
+      <div class="dbg-section-head">
+        <span>Snapshot</span>
+        <button class="dbg-clr" id="copy-raw-btn">copy</button>
+      </div>
+      <pre class="dbg-raw" id="dbg-raw">No data yet</pre>
+    </div>
+
+  </main>
+
+  <script src="popup.js"></script>
+</body>
+</html>
