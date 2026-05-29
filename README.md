@@ -378,10 +378,4 @@ Always obtain proper authorization before analyzing applications you do not own.
 
 ---
 
-## Author
-
-**Uday Sheth**
-
-GitHub: https://github.com/Sheth007
-
 If you find Flutter Recon useful, consider giving the repository a ⭐.
